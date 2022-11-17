@@ -32,9 +32,11 @@
                     end = `\\]${code[1]}`
                     separator = encodeURIComponent(separator).replace(/\%20/g,'+')
                 }
-                const output = `${start}$replaceText[${escaped?'$url[encode;'+array+']':array};${separator};${end}SEPARATOR${start}]${end}`;
-                            
-                document.getElementById('output').value=output;        
+                let output = `$eval[${start}$replaceText[${escaped?'$url[encode;'+array+']':array};${separator};${end}SEPARATOR${start}]${end}]`;
+                if(separator==""){
+                    output = `$eval[$textSplit[${array};]${code[0]}$joinSplitText[${code[1]}SEPARATOR${code[0]}]${code[1]}]`
+                }
+                document.getElementById('output').value=output;
             }
             
             function copy(){
